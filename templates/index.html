@@ -1,0 +1,31 @@
+<html>
+<head>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+	<title>todolist</title>
+</head>
+<body>
+
+<script type="text/javascript" charset="utf-8">
+
+const socket = io();
+socket.on('server_message', (data) => {
+    let elem = document.createElement('p')
+    elem.innerHTML = data.task;
+    document.getElementById('tasks').appendChild(elem);
+});
+
+function addTask(){
+    socket.emit('client_message', { 'task': document.getElementById('task').value });
+    document.getElementById('task').value = '';
+}
+</script>
+
+<input id="task" placeholder="  Task Name">
+<button type="text" type="button" id="addTask" onclick="addTask()">Add</button>
+
+<br><br>
+<a style="font-size: 25px; margin-left: 15px;">Current Tasks</a>
+<section id="tasks"></section>
+
+</body>
+</html>
